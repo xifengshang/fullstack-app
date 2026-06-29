@@ -1,10 +1,11 @@
 import axios, { type AxiosInstance, type AxiosRequestConfig, type AxiosResponse } from 'axios'
+import { useAuthStore } from '@/stores/auth'
 
 // 定义后端返回格式
 interface ResponseData<T = any> {
   code: number
   data: T
-  msg: string
+  message: string
 }
 
 // 创建axios实例
@@ -16,9 +17,9 @@ const service:AxiosInstance = axios.create({
 // 请求拦截器
 service.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('token')
-    if (token && config.headers) {
-      config.headers.Authorization = `Bearer ${token}`
+    const authStore = useAuthStore()
+    if (authStore.token && config.headers) {
+      config.headers.Authorization = `Bearer ${authStore.token}`
     }
     return config
   },
@@ -28,7 +29,7 @@ service.interceptors.request.use(
 // 响应拦截器
 service.interceptors.response.use(
   (response: AxiosResponse) => {
-    const res = response.data
+    const res = response
     return res
   }
   ,

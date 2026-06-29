@@ -21,9 +21,15 @@ export interface UserInfo {
   token: string
 }
 
+export interface ApiResponse<T = any> {
+  code: number
+  message: string
+  data: T
+}
+
 // 登录接口
 export function loginApi(data: LoginForm) {
-  return request.post<UserInfo>('/auth/login', data)
+  return request.post<ApiResponse>('/auth/login', data)
 }
 
 // 注册接口
