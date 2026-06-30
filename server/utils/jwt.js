@@ -3,7 +3,7 @@ const config = require('../config/index');
 
 // 生成token
 exports.createToken = (user) => {
-  return jwt.sign({ id: user.id }, config.JWT_SECRET, {
+  return jwt.sign({ id: user._id }, config.JWT_SECRET, {
     expiresIn: config.JWT_EXPIRE,
   });
 };

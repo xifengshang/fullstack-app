@@ -4,6 +4,7 @@ import { useAuthStore } from '@/stores/auth.ts'
 import HomeView from '../views/HomeView.vue'
 import About from '../views/About.vue'
 import Login from '../views/auth/Login.vue'
+import Layout from '../views/Layout/Index.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -11,7 +12,25 @@ const router = createRouter({
     {
       path: '/',
       name: 'HomeView',
-      component: HomeView
+      component: Layout,
+      redirect: '/home',
+      children: [
+        {
+          path: 'home',
+          name: 'Home',
+          component: HomeView
+        },
+        {
+          path: 'user-list',
+          name: 'UserList',
+          component: () => import('../views/user/UserList.vue')
+        },
+        {
+          path: 'role-list',
+          name: 'RoleList',
+          component: () => import('../views/user/RoleList.vue')
+        }
+      ]
     },
     {
       path: '/about',
